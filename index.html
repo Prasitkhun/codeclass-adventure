@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CodeClass - เรียนเขียนโปรแกรม</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="start-screen" id="startScreen" aria-label="ตั้งชื่อก่อนเริ่ม">
+    <div class="start-card">
+      <p class="eyebrow">CodeClass Cartoon Lab</p>
+      <h1>ตั้งชื่อผู้เล่น</h1>
+      <p>ใส่ชื่อก่อนเริ่มเรียน เพื่อเก็บคะแนนและสถิติแยกเป็นรายคน</p>
+      <label class="start-name">
+        <span>ชื่อผู้เล่น</span>
+        <input id="startNameInput" type="text" placeholder="เช่น เมย์">
+      </label>
+      <button id="startBtn" class="primary-btn" type="button">เริ่มเรียน</button>
+      <p class="start-error" id="startError" role="status"></p>
+    </div>
+  </section>
+
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">บทเรียนเริ่มต้น</p>
+      <h1>CodeClass</h1>
+    </div>
+    <div class="header-actions">
+      <div class="view-switch" aria-label="เลือกหน้า">
+        <button class="view-btn active" type="button" data-view="learn">หน้าเรียน</button>
+        <button class="view-btn" type="button" data-view="course">หลักสูตร</button>
+        <button class="view-btn" type="button" data-view="missions">ภารกิจ</button>
+        <button class="view-btn" type="button" data-view="badges">เหรียญ</button>
+        <button class="view-btn" type="button" data-view="guide">คู่มือ</button>
+        <button class="view-btn" type="button" data-view="player">ข้อมูลผู้เล่น</button>
+      </div>
+      <div class="progress-wrap" aria-label="ความคืบหน้า">
+        <span id="progressText">0/4 กิจกรรม</span>
+        <div class="progress-track"><div id="progressBar"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout" id="learnPage">
+    <nav class="lesson-nav" aria-label="เลือกบทเรียน">
+      <section class="nav-category">
+        <div class="category-head">
+          <span>พื้นฐาน</span>
+          <small data-category-progress="basic">0/30</small>
+        </div>
+        <button class="nav-item active" data-lesson="intro"><span>01</span> คำสั่งแรก</button>
+        <button class="nav-item" data-lesson="variable"><span>02</span> ตัวแปร</button>
+      </section>
+
+      <section class="nav-category">
+        <div class="category-head">
+          <span>ตรรกะ</span>
+          <small data-category-progress="logic">0/15</small>
+        </div>
+        <button class="nav-item" data-lesson="condition"><span>03</span> เงื่อนไข</button>
+      </section>
+
+      <section class="nav-category">
+        <div class="category-head">
+          <span>การทำซ้ำ</span>
+          <small data-category-progress="repeat">0/15</small>
+        </div>
+        <button class="nav-item" data-lesson="loop"><span>04</span> ลูป</button>
+      </section>
+    </nav>
+
+    <section class="lesson-panel" aria-live="polite">
+      <div class="visual">
+        <canvas id="codeCanvas" width="720" height="260" aria-label="ภาพประกอบแนวคิดการเขียนโปรแกรม"></canvas>
+      </div>
+
+      <article>
+        <p class="lesson-kicker" id="lessonKicker">บทที่ 1</p>
+        <h2 id="lessonTitle">การสั่งให้คอมพิวเตอร์ทำงาน</h2>
+        <p id="lessonBody">
+          โปรแกรมคือชุดคำสั่งที่เราเขียนให้คอมพิวเตอร์ทำตามทีละขั้น เริ่มจากคำสั่งง่าย ๆ อย่างการแสดงข้อความบนหน้าจอ
+        </p>
+        <pre><code id="lessonCode">print("สวัสดี")</code></pre>
+      </article>
+
+      <section class="activity">
+        <div class="activity-heading">
+          <div>
+            <p class="lesson-kicker">กิจกรรมย่อย</p>
+            <h3 id="activityTitle">เติมคำสั่งให้แสดงข้อความ</h3>
+          </div>
+          <span id="activityStatus">ยังไม่ทำ</span>
+        </div>
+
+        <div id="activityArea"></div>
+        <p class="feedback" id="feedback" role="status"></p>
+      </section>
+    </section>
+
+    <aside class="sandbox">
+      <div class="sandbox-head">
+        <div>
+          <p class="lesson-kicker">ทดลองเขียน</p>
+          <h2>สนามซ้อมโค้ด</h2>
+        </div>
+        <button id="runBtn" class="primary-btn">รัน</button>
+      </div>
+      <section class="practice-level" aria-label="การฝึกเขียนโค้ดทีละระดับ">
+        <div class="level-topline">
+          <span id="levelBadge">ระดับ 1/5</span>
+          <strong id="levelTitle">พิมพ์ข้อความแรก</strong>
+        </div>
+        <p id="levelGoal">เขียนโค้ดให้แสดงคำว่า สวัสดี</p>
+        <div class="level-track"><div id="levelProgress"></div></div>
+        <div class="level-actions">
+          <button id="prevLevelBtn" class="check-btn secondary-btn" type="button">ระดับก่อนหน้า</button>
+          <button id="checkLevelBtn" class="check-btn" type="button">ตรวจระดับ</button>
+          <button id="nextLevelBtn" class="check-btn secondary-btn" type="button">ระดับถัดไป</button>
+        </div>
+      </section>
+      <textarea id="codeInput" spellcheck="false">print("สวัสดี")</textarea>
+      <div class="output" id="output">ผลลัพธ์จะแสดงตรงนี้</div>
+      <p class="hint" id="levelHint">คำใบ้: ใช้ print("สวัสดี")</p>
+    </aside>
+  </main>
+
+  <main class="player-page hidden" id="playerPage">
+    <section class="player-panel score-report" aria-label="รายงานคะแนนผู้เล่น">
+      <div class="sandbox-head">
+        <div>
+          <p class="lesson-kicker">ข้อมูลผู้เล่น</p>
+          <h2>โปรไฟล์และสถิติ</h2>
+        </div>
+        <button id="resetScoreBtn" class="check-btn secondary-btn" type="button">เริ่มใหม่</button>
+      </div>
+      <div class="player-grid">
+        <section class="profile-card">
+          <label class="player-name">
+            <span>ชื่อผู้เล่น</span>
+            <input id="playerName" type="text" placeholder="พิมพ์ชื่อของคุณ">
+          </label>
+          <div class="profile-tools">
+            <label>
+              <span>เลือกโปรไฟล์</span>
+              <select id="profileSelect" aria-label="เลือกโปรไฟล์ผู้เล่น"></select>
+            </label>
+            <button id="newProfileBtn" class="check-btn" type="button">ผู้เล่นใหม่</button>
+          </div>
+          <p class="profile-summary" id="profileSummary">กำลังใช้โปรไฟล์หลัก</p>
+        </section>
+
+        <section class="score-hero">
+          <strong id="totalScore">0</strong>
+          <span id="scorePercent">0% สำเร็จ</span>
+        </section>
+      </div>
+      <div class="player-stats" id="playerStats"></div>
+      <div class="score-bars" id="scoreReport"></div>
+    </section>
+  </main>
+
+  <main class="topic-page hidden" id="coursePage">
+    <section class="topic-panel">
+      <p class="lesson-kicker">ภาพรวมหลักสูตร</p>
+      <h2>แผนที่การเรียน Python ฉบับการ์ตูน</h2>
+      <div class="topic-grid">
+        <article class="topic-card"><span>01</span><h3>คำสั่งแรก</h3><p>อ่านโค้ดจากบนลงล่างและแสดงข้อความด้วย print()</p></article>
+        <article class="topic-card"><span>02</span><h3>ตัวแปร</h3><p>เก็บข้อมูล เช่น ชื่อ คะแนน และข้อความ เพื่อใช้ซ้ำในโปรแกรม</p></article>
+        <article class="topic-card"><span>03</span><h3>เงื่อนไข</h3><p>ให้โปรแกรมตัดสินใจด้วย if และการเปรียบเทียบ</p></article>
+        <article class="topic-card"><span>04</span><h3>ลูป</h3><p>ทำงานซ้ำอย่างเป็นระบบด้วย for และ range()</p></article>
+      </div>
+    </section>
+  </main>
+
+  <main class="topic-page hidden" id="missionsPage">
+    <section class="topic-panel">
+      <p class="lesson-kicker">คลังภารกิจ</p>
+      <h2>โจทย์เสริมสำหรับฝึกหลังเรียน</h2>
+      <div class="mission-list">
+        <article class="topic-card"><h3>ภารกิจร้านพิซซ่า</h3><p>สร้างตัวแปร topping แล้วแสดงข้อความ “ฉันเลือก...”</p></article>
+        <article class="topic-card"><h3>ภารกิจประตูคะแนน</h3><p>ตั้ง score แล้วใช้ if ตรวจว่าคะแนนตั้งแต่ 50 ผ่านหรือไม่</p></article>
+        <article class="topic-card"><h3>ภารกิจดาว 5 ดวง</h3><p>ใช้ for i in range(5) เพื่อพิมพ์รายการดาว 5 บรรทัด</p></article>
+        <article class="topic-card"><h3>ภารกิจทักทายเพื่อน</h3><p>เก็บชื่อเพื่อนในตัวแปร name แล้ว print(name)</p></article>
+      </div>
+    </section>
+  </main>
+
+  <main class="topic-page hidden" id="badgesPage">
+    <section class="topic-panel">
+      <p class="lesson-kicker">เหรียญความสำเร็จ</p>
+      <h2>สะสมเหรียญจากความคืบหน้าของคุณ</h2>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </section>
+  </main>
+
+  <main class="topic-page hidden" id="guidePage">
+    <section class="topic-panel">
+      <p class="lesson-kicker">คู่มือช่วยจำ</p>
+      <h2>สูตรลัดที่เปิดดูได้ตลอด</h2>
+      <div class="cheat-grid">
+        <article class="topic-card"><h3>แสดงผล</h3><pre><code>print("สวัสดี")</code></pre></article>
+        <article class="topic-card"><h3>ตัวแปร</h3><pre><code>name = "เมย์"
+print(name)</code></pre></article>
+        <article class="topic-card"><h3>เงื่อนไข</h3><pre><code>if age >= 18:
+    print("ผ่าน")</code></pre></article>
+        <article class="topic-card"><h3>ลูป</h3><pre><code>for i in range(3):
+    print(i)</code></pre></article>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
